@@ -1,0 +1,349 @@
+{
+	"info": {
+		"_postman_id": "d565778a-c671-4a4e-a7c6-567f49dd5239",
+		"name": "Nutrabiotics - prueba tecnica",
+		"description": "Esta API RESTful ha sido desarrollada como parte de una **prueba técnica** para evaluar habilidades en diseño, desarrollo y estructuración de una aplicación backend moderna utilizando **Node.js**, **Express**, **MongoDB** y **TypeScript**.\n\nEl sistema implementa funcionalidades clave para la **gestión de usuarios, productos y órdenes**, incorporando mecanismos de autenticación, control de acceso por roles y manejo centralizado de errores.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26336588"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Juan\",\r\n  \"lastname\": \"Pérez\",\r\n  \"type_document\": \"CC\",  \r\n  \"document\": \"123456789\",\r\n  \"email\": \"juan.perez@dominio.com\",\r\n  \"password\": \"contraseña123\",\r\n  \"role\": \"CLIENT_ROLE\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}auth/register",
+							"host": [
+								"{{endpoint}}auth"
+							],
+							"path": [
+								"register"
+							]
+						},
+						"description": "name: nombre del usuario ( obligatorio)  \nlastname: apellidos del usuario (obligatorio)\n\ntype_document: Tipo de documento del usuario, por ejemplo, \"CC\" (Cédula de Ciudadanía), \"TI\" (Tarjeta de Identidad), etc. (obligatorio)\n\ndocument: Número de documento de identificación del usuario (obligatorio).\n\nemail: correo electronico unico del usuario (obligatorio)\n\npassword: contraseña del usuario, la contraseña debe tener: minimio una letra en mayuscula, minimo un numero, minimo un caracter especial y la logintud es de 8 a 12 ( obligatorio)\n\nrole: Rol del usuario en el sistema Por defecto esta como \"ADMIN_ROLE\", pero puede ser modificado a otros roles como \"CLIENT_ROLE\", si es necesario (opcional)"
+					},
+					"response": []
+				},
+				{
+					"name": "singIn",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"juan.perez@dominio.com\",\r\n  \"password\": \"contraseña123\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}auth/login",
+							"host": [
+								"{{endpoint}}auth"
+							],
+							"path": [
+								"login"
+							]
+						},
+						"description": "Esta ruta permite a un usuario autenticado obtener un **token JWT** para poder acceder a las rutas protegidas de la aplicación.\n\nemail: correo electronico unico del usuario (obligatorio)\n\npassword: contraseña del usuario, la contraseña debe tener: minimio una letra en mayuscula, minimo un numero, minimo un caracter especial y la logintud es de 8 a 12 ( obligatorio)"
+					},
+					"response": []
+				}
+			],
+			"description": "Este módulo proporciona las rutas necesarias para **registro**, **inicio de sesión** (login) y la protección de rutas mediante **tokens JWT**.\n\nLas operaciones de autenticación permiten gestionar el acceso de los usuarios a las funcionalidades de la aplicación.\n\nEndFragment"
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "create product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"name\":\"coca cola\",\r\n    \"sku\": 12121226,\r\n    \"quantity\": 12,\r\n    \"price\": 12200,\r\n    \"user\": \"\",\r\n    \"isActive\": true\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}products",
+							"host": [
+								"{{endpoint}}products"
+							]
+						},
+						"description": "Esta ruta permite crear un nuevo producto en el sistema\n\n- name: **string** (obligatorio) - Nombre del producto.\n    \n- sku: **number** (obligatorio) - Código único del producto (Stock Keeping Unit).\n    \n- quantity: **number** (obligatorio) - Cantidad de productos disponibles en inventario.\n    \n- price: **number** (obligatorio) - Precio del producto en unidades de la moneda local.\n    \n- user: **string** (obligatorio) - ID del usuario que crea el producto (puede ser un ID de tipo ObjectId de MongoDB o similar).\n    \n- isActive: **boolean** (obligatorio) - Indica si el producto está activo en el sistema (si se puede vender o no)."
+					},
+					"response": []
+				},
+				{
+					"name": "update product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"name\":\"coca cola\",\r\n    \"quantity\": 12,\r\n    \"price\": 12200,\r\n    \"user\": \"6815927ee4eb086c3cb67cd9\",\r\n    \"isActive\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}products/6816131951607ffe8ab4b413",
+							"host": [
+								"{{endpoint}}products"
+							],
+							"path": [
+								"6816131951607ffe8ab4b413"
+							]
+						},
+						"description": "Esta ruta permite actualizar la información de un producto existente, identificándolo por su **ID.**  \n\nDescripción de los Campos:\n\n- `name`: **string** (opcional) - Nuevo nombre del producto.\n    \n- `quantity`: **number** (opcional) - Nueva cantidad de productos en inventario.\n    \n- `price`: **number** (opcional) - Nuevo precio del producto.\n    \n- `user`: **string** (opcional) - ID del usuario que está actualizando el producto.\n    \n- `isActive`: **boolean** (opcional) - Nuevo estado de actividad del producto (activo o inactivo)."
+					},
+					"response": []
+				},
+				{
+					"name": "all products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}products",
+							"host": [
+								"{{endpoint}}products"
+							]
+						},
+						"description": "Esta ruta permite obtener una lista de todos los productos disponibles en el sistema\n\n### Resumen\n\n- Esta ruta no requiere un token de autenticación.\n    \n- Solo se debe enviar una solicitud `GET` a `/products` y se obtendrá la lista de productos disponibles en el sistema."
+					},
+					"response": []
+				},
+				{
+					"name": "get product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}products/681612860d28c9e6265b1b19",
+							"host": [
+								"{{endpoint}}products"
+							],
+							"path": [
+								"681612860d28c9e6265b1b19"
+							]
+						},
+						"description": "Esta ruta permite obtener la información de un producto específico, identificándolo por su ID.  \n\n**Parámetros en la URL**:\n\n- `{id}`: El **ID** del producto que se desea obtener (obligatorio). Este puede ser un `ObjectId` o un identificador único similar, dependiendo de cómo se gestiona el ID en la base de datos.\n    \n\n### Resumen\n\n- Esta ruta no requiere autenticación ni token.\n    \n- Se debe incluir el **ID** del producto en la URL para obtener los detalles de un producto específico.\n    \n- Si el producto no se encuentra en la base de datos, se devuelve un error **404**.\n    \n- Si hay algún problema con la base de datos o el servidor, se devuelve un error **500**."
+					},
+					"response": []
+				},
+				{
+					"name": "delete product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}products/6816131951607ffe8ab4b413",
+							"host": [
+								"{{endpoint}}products"
+							],
+							"path": [
+								"6816131951607ffe8ab4b413"
+							]
+						},
+						"description": "Esta ruta permite eliminar un producto del sistema utilizando su ID  \n\n**Parámetros en la URL**:\n\n- `{id}`: El **ID** del producto que se desea eliminar (obligatorio).\n    \n\n### Resumen\n\n- Esta ruta requiere autenticación.\n    \n- solo el administrador tiene permisos para realizar la accion.\n    \n- Solo es necesario proporcionar el **ID** del producto en la URL para eliminarlo del sistema.\n    \n- Si el producto no se encuentra en la base de datos, se devuelve un error **404**.\n    \n- En caso de error en la base de datos o el servidor, se devuelve un error **500**."
+					},
+					"response": []
+				}
+			],
+			"description": "Este módulo permite gestionar productos dentro de la aplicación. Las operaciones básicas incluyen la creación (solo administrador), obtención, actualización (solo administrador) y eliminación de productos ( solo administrador)",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token_admin}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "create order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product\": \"68162bd803da6a859c807523\",\r\n    \"price_unit\": 12200,\r\n    \"quantity\": 2,\r\n    \"price_total\": 24400,\r\n    \"user\": \"6816368177651cc3fbe48618\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}orders",
+							"host": [
+								"{{endpoint}}orders"
+							]
+						},
+						"description": "Esta ruta permite a un **cliente autenticado** crear una nueva orden. El cliente proporciona los detalles necesarios para la orden, como los productos, la cantidad, el precio, etc.\n\nStartFragment\n\n### **Requisitos**:\n\n- **Autenticación**: Se debe incluir un **token de autenticación** válido en los encabezados de la solicitud.\n    \n- **Rol**: El usuario autenticado debe tener el rol **\"CLIENT_ROLE\"** para crear la orden.\n    \n\n### Descripción de los Campos:\n\n- `product`: **string** (obligatorio) - ID del producto que el usuario desea comprar.\n    \n- `price_unit`: **number** (obligatorio) - Precio unitario del producto.\n    \n- `quantity`: **number** (obligatorio) - Cantidad del producto en la orden.\n    \n- `price_total`: **number** (obligatorio) - Monto total de esa línea de la orden (es igual a `price_unit \\\\* quantity`).\n    \n- `user`: **string** (obligatorio) - ID del usuario que está realizando la orden.\n    \n\n### Resumen\n\n- La creación de una orden solo es accesible para **clientes autenticados**.\n    \n- El cuerpo de la solicitud incluye detalles como el producto, el precio unitario, la cantidad, el precio total y el usuario.\n    \n- Se debe incluir un **token de autenticación** válido en el encabezado `Authorization` para crear la orden.\n    \n- El precio total se calcula automáticamente multiplicando el `price_unit` por la `quantity` de cada producto en la orden."
+					},
+					"response": []
+				},
+				{
+					"name": "get order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}orders/68163320521b4aff222ea044",
+							"host": [
+								"{{endpoint}}orders"
+							],
+							"path": [
+								"68163320521b4aff222ea044"
+							]
+						},
+						"description": "Esta ruta permite a un usuario obtener una orden específica por su **ID**. El comportamiento varía según el rol del usuario\n\n- **Clientes**: Solo pueden obtener sus propias órdenes.\n    \n- **Administradores**: Pueden obtener cualquier orden.\n    \n\n**Parámetros**:\n\n- `id` (**string**) - El **ID** de la orden que se desea obtener.\n    \n\n### **Requisitos**:\n\n- **Autenticación**: Se debe incluir un **token de autenticación** válido en los encabezados de la solicitud."
+					},
+					"response": []
+				},
+				{
+					"name": "all orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}orders",
+							"host": [
+								"{{endpoint}}orders"
+							]
+						},
+						"description": "Esta ruta permite a un usuario obtener las órdenes. El comportamiento varía según el rol del usuario\n\n- **Clientes**: Solo pueden obtener sus propias órdenes.\n    \n- **Administradores**: Pueden obtener todas las órdenes.\n    \n\n### **Requisitos**:\n\n- **Autenticación**: Se debe incluir un **token de autenticación** válido en los encabezados de la solicitud."
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token_admin}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "endpoint",
+			"value": "http://localhost:3000/api/v1/",
+			"type": "string"
+		},
+		{
+			"key": "token_admin",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTU5MjdlZTRlYjA4NmMzY2I2N2NkOSIsIm5hbWUiOiJtaWd1ZWwgYW5nZWwiLCJsYXN0bmFtZSI6ImhlcnJlcmEgdmFyZ2FzIiwidHlwZV9kb2N1bWVudCI6ImNjIiwiZG9jdW1lbnQiOiIxMDAzNjE0MzA2IiwiZW1haWwiOiJtaWd1ZWxoMTI5N0BnbWFpbC5jb20iLCJyb2xlIjoiQURNSU5fUk9MRSIsImlhdCI6MTc0NjI4MTMzMywiZXhwIjoxNzQ2MzY3NzMzfQ.ZYD-5kTYahs7zWnQv0bp9qKWKDIkVFjJ9ntpnNW5eaM",
+			"type": "string"
+		},
+		{
+			"key": "token_client",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTU3YTYzOGEwM2FhZTI2NGE3OGQzMCIsIm5hbWUiOiJtaWd1ZWwgYW5nZWwiLCJsYXN0bmFtZSI6ImhlcnJlcmEgdmFyZ2FzIiwidHlwZV9kb2N1bWVudCI6ImNjIiwiZG9jdW1lbnQiOiIxMDAzNjE0MzA2IiwiZW1haWwiOiJtaWd1ZWxoMTI5OUBnbWFpbC5jb20iLCJyb2xlIjoiQ0xJRU5UX1JPTEUiLCJpYXQiOjE3NDYyODQ3NTEsImV4cCI6MTc0NjM3MTE1MX0.WK3m_wgBNWd7YYOZQWZNR-Vykae83OgSpOh4j0pGF-g",
+			"type": "string"
+		},
+		{
+			"key": "token_client_2",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTYzNjgxNzc2NTFjYzNmYmU0ODYxOCIsIm5hbWUiOiJtaWd1ZWwgYW5nZWwiLCJsYXN0bmFtZSI6ImhlcnJlcmEgdmFyZ2FzIiwidHlwZV9kb2N1bWVudCI6ImNjIiwiZG9jdW1lbnQiOiIxMDAzNjE0MzA2IiwiZW1haWwiOiJtaWd1ZWxoMTI5OEBnbWFpbC5jb20iLCJyb2xlIjoiQ0xJRU5UX1JPTEUiLCJpYXQiOjE3NDYyODYyMTYsImV4cCI6MTc0NjM3MjYxNn0.dSBPboza1cQrbd-RHE2E0DS-nLmMuOGpSxRBseGKURY",
+			"type": "string"
+		}
+	]
+}

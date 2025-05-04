@@ -1,0 +1,9 @@
+PORT=3000                                                               # puerto en el cual correra el servidor
+
+# connection to database mongo
+MONGOURL=                                                               # url de conecion de la base de datos
+DBNAME=                                                                 # nombre de la base de datos
+
+# configuration JWT
+DURATION_JWT=                                                           # duracion de expiracion del token ejemplo (3600*24) 86400
+SECKET_KEY_JWT=                                                         # clave secreta para firmar el token
