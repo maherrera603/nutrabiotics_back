@@ -2,9 +2,12 @@ import { model, Schema } from "mongoose";
 
 const orderSchema = new Schema({
     product: {
-        type: Schema.Types.ObjectId,
+        type: String,
         required: [ true, "product is required"],
-        ref: "Product",
+    },
+    sku: {
+        type: Number,
+        required: [ true, "product sku is required"]
     },
     price_unit: {
         type: Number,
