@@ -10,7 +10,6 @@ export class OrderController extends Controller {
     }
 
     public createOrder = ( req: Request, res: Response ):any => {
-        console.log( req.body)
         const [ error, orderDto] = OrderCreateDTO.validate( req.body );
         if( error ) return res.status(400).json({ code: 400, status: "bad request", msg: error});
 
